@@ -6,7 +6,7 @@ from django.views import View
 
 class HomeView(View):
     template_name = 'blog/home.html'
-    context = {'title': 'Home View'}
+    context = {'title': 'Blog App'}
 
     def get(self, request, *args, **kwargs):
         return render(request=request, template_name=self.template_name, context=self.context)
