@@ -5,9 +5,9 @@
 {% if posts %}
 {% for post in posts %}
 <fieldset>
-    <legend><b>[ post.title ]</b></legend>
+    <legend><b>[ {{ post.title }} ]</b></legend>
     <p>{{ post.content }}</p>
-</fieldset>
+</fieldset><br>
 {% endfor %}
 {% else %}
 <p>No Posts Yet</p>
