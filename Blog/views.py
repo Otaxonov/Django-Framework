@@ -20,3 +20,15 @@ class PostsView(View):
     def get(self, request, *args, **kwargs):
         self.context['posts'] = Post.objects.all()
         return render(request=request, template_name=self.template_name, context=self.context)
+
+
+class PostView(View):
+    template_name = 'blog/post.html'
+
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(slug=kwargs['post_slug'])
+        context = {
+            'title': post.title,
+            'post': post
+        }
+        return render(request=request, template_name=self.template_name, context=context)
