@@ -1,6 +1,6 @@
 from Users.forms import SignUpForm, SignInForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.views import View
 
 # Create your views here.
@@ -39,3 +39,6 @@ class SignUpView(View):
             return redirect('blog_home')
         self.context['form'] = form
         return render(request=request, template_name=self.template_name, context=self.context)
+
+
+
