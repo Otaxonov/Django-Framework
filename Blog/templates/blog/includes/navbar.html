@@ -5,6 +5,6 @@
 <a href="">Sign-Out</a>
 {% else %}
 <a href="{% url 'users_sign_up' %}">Sign-Up</a> /
-<a href="">Sign-In</a>
+<a href="{% url 'users_sign_in' %}">Sign-In</a>
 {% endif %}
 <hr>
