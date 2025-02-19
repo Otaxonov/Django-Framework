@@ -2,7 +2,7 @@
 <a href="{% url 'blog_posts' %}">Posts</a> /
 {% if user.is_authenticated %}
 <a href="">Profile</a> /
-<a href="">Sign-Out</a>
+<a href="{% url 'users_sign_out' %}">Sign-Out</a>
 {% else %}
 <a href="{% url 'users_sign_up' %}">Sign-Up</a> /
 <a href="{% url 'users_sign_in' %}">Sign-In</a>

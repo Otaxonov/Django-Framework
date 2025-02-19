@@ -41,4 +41,8 @@ class SignUpView(View):
         return render(request=request, template_name=self.template_name, context=self.context)
 
 
-
+class SignOutView(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            logout(request)
+        return redirect('blog_home')
