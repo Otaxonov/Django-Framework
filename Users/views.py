@@ -1,10 +1,22 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from Users.forms import SignUpForm, SignInForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
+from Blog.models import Post
 from django.views import View
 
 # Create your views here.
 
+@method_decorator(login_required, name='dispatch')
+class PostsView(View):
+    template_name = 'users/posts.html'
+    context = {'title': 'My Posts'}
+
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.filter(author=request.user)
+        self.context['posts'] = posts
+        return render(request=request, template_name=self.template_name, context=self.context)
 
 class SignInView(View):
     template_name = 'users/sign_in.html'

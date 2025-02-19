@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<a href="">New Post</a>
+{% if posts %}
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+<table style="width:100%">
+  <tr>
+    <th>Title</th>
+    <th>Slug</th>
+    <th>Date Created</th>
+    <th>Date Modified</th>
+    <th>Action</th>
+  </tr>
+{% for post in posts %}
+  <tr>
+    <td>{{ post.title }}</td>
+    <td>{{ post.slug }}</td>
+    <td>{{ post.date_created }}</td>
+    <td>{{ post.date_modified }}</td>
+    <td><a href="">Edit</a> / <a href="">Delete</a></td>
+  </tr>
+{% endfor %}
+</table>
+{% else %}
+<p>No Posts Yet</p>
+{% endif %}
+
+{% endblock content %}
