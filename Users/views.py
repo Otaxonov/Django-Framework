@@ -3,10 +3,32 @@ from django.utils.decorators import method_decorator
 from Users.forms import SignUpForm, SignInForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
+from Users.forms import PostCreateForm
 from Blog.models import Post
 from django.views import View
 
 # Create your views here.
+
+@method_decorator(login_required, name='dispatch')
+class PostCreateView(View):
+    template_name = 'users/post/create.html'
+    context = {'title': 'New Post'}
+
+    def get(self, request, *args, **kwargs):
+        self.context['form'] = PostCreateForm()
+        return render(request=request, template_name=self.template_name, context=self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = PostCreateForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('users_posts')
+        self.context['form'] = form
+        return render(request=request, template_name=self.template_name, context=self.context)
+
+
 
 @method_decorator(login_required, name='dispatch')
 class PostsView(View):

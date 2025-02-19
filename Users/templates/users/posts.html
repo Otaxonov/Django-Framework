@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<a href="">New Post</a>
+<a href="{% url 'users_post_create' %}">New Post</a>
 {% if posts %}
 <style>
 table, th, td {
