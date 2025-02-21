@@ -22,7 +22,7 @@ table, th, td {
     <td>{{ post.slug }}</td>
     <td>{{ post.date_created }}</td>
     <td>{{ post.date_modified }}</td>
-    <td><a href="{% url 'users_post_edit' post.slug  %}">Edit</a> / <a href="">Delete</a></td>
+    <td><a href="{% url 'users_post_edit' post.slug  %}">Edit</a> / <a href="{% url 'users_post_delete' post.slug %}">Delete</a></td>
   </tr>
 {% endfor %}
 </table>

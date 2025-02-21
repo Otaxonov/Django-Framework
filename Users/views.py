@@ -11,6 +11,22 @@ from django.views import View
 
 
 @method_decorator(login_required, name='dispatch')
+class PostDeleteView(View):
+    template_name = 'users/post/delete.html'
+    context = {'title': 'Delete Post'}
+
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(slug=kwargs['post_slug'], author=request.user)
+        self.context['post'] = post
+        return render(request=request, template_name=self.template_name, context=self.context)
+
+    def post(self, request, *args, **kwargs):
+        post = Post.objects.get(slug=kwargs['post_slug'], author=request.user)
+        post.delete()
+        return redirect('users_posts')
+
+
+@method_decorator(login_required, name='dispatch')
 class PostEditView(View):
     template_name = 'users/post/edit.html'
     context = {'title': 'Edit Post'}
