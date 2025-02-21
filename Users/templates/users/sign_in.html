@@ -2,10 +2,15 @@
 
 {% block content %}
 
+<div class="container-fluid p-5 bg-success text-white rounded-4" style="max-width:600px">
+<h3 class="text-center">Sign-In</h3><hr>
 <form action="{% url 'users_sign_in' %}" method="post">
     {% csrf_token %}
+    <fieldset>
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <button class="btn btn-dark float-end" type="submit">Login</button>
+    </fieldset>
 </form>
+</div>
 
 {% endblock content %}

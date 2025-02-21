@@ -9,10 +9,51 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+    username = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control mb-3'
+        })
+    )
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control mb-3'
+        })
+    )
+    password1 = forms.CharField(
+        label='Password',
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control mb-3'
+        })
+    )
+    password2 = forms.CharField(
+        label='Password Confirmation',
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control mb-3'
+        })
+    )
+
 
 class SignInForm(AuthenticationForm):
-    username = forms.CharField(label='Username', max_length=100)
-    password = forms.CharField(label='Password', widget=forms.PasswordInput())
+    username = forms.CharField(
+        label='Username',
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control mb-3'
+        })
+    )
+    password = forms.CharField(
+        label='Password',
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control mb-3'
+        })
+    )
 
 
 class PostCreateForm(forms.ModelForm):
