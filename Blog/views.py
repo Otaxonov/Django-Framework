@@ -4,6 +4,7 @@ from Blog.models import Post
 
 # Create your views here.
 
+
 class HomeView(View):
     template_name = 'blog/home.html'
     context = {'title': 'Blog App'}
