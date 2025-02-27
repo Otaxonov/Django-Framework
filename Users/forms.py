@@ -90,3 +90,24 @@ class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'slug', 'content']
+
+    title = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control mb-3',
+        })
+    )
+
+    slug = forms.SlugField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control mb-3',
+        })
+    )
+
+    content = forms.CharField(
+        required=True,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control mb-3',
+        })
+    )

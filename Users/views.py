@@ -45,6 +45,7 @@ class PostEditView(View):
         form = PostEditForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Post Updated Successfully!', extra_tags='success')
             return redirect('users_post_edit', form.cleaned_data['slug'])
         self.context['form'] = form
         self.context['post'] = post

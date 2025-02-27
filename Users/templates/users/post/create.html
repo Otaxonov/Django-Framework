@@ -7,7 +7,7 @@
 <form action="{% url 'users_post_create' %}" method="post">
     {% csrf_token %}
     <fieldset>
-    {{ form.as_p }}
+    {{ form }}
     <button class="btn btn-primary float-end" type="submit">Submit</button>
     </fieldset>
 </form>

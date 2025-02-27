@@ -1,10 +1,15 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+<div class="container shadow-sm bg-light rounded-4 p-5">
 <h3>Edit Post</h3>
+    <hr>
 <form action="{% url 'users_post_edit' post.slug %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <fieldset>
+    {{ form }}
+    <button class="btn btn-primary float-end" type="submit">Submit</button>
+    </fieldset>
 </form>
+</div>
 {% endblock content %}
