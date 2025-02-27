@@ -2,7 +2,19 @@
 {% load custom_tags %}
 
 {% block content %}
-<a class="btn btn-success" href="{% url 'users_post_create' %}">New Post</a>
+
+<form class="row g-3 align-items-center" action="{% url 'users_posts' %}" method="get">
+    <div class="col-md-6">
+        {{ form.title }}
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-success float-end" href="{% url 'users_post_create' %}">New Post</a>
+    </div>
+</form>
+
 <hr>
 {% if posts %}
 <table class="table table-striped bg-light shadow-sm align-middle">

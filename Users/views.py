@@ -5,6 +5,7 @@ from Users.forms import SignUpForm, SignInForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from Users.forms import PostCreateForm, PostEditForm
+from Users.filters import PostFilter
 from django.contrib import messages
 from Blog.models import Post
 from django.views import View
@@ -79,10 +80,19 @@ class PostsView(View):
 
     def get(self, request, *args, **kwargs):
         posts = Post.objects.filter(author=request.user)
+
+        posts_filter = PostFilter(request.GET, queryset=posts)
+
+        form = posts_filter.form
+        posts = posts_filter.qs
+
         paginator = Paginator(posts, 10)
         page_number = request.GET.get("page")
         posts = paginator.get_page(page_number)
+
         self.context['posts'] = posts
+        self.context['form'] = form
+
         return render(request=request, template_name=self.template_name, context=self.context)
 
 class SignInView(View):
