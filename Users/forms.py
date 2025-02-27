@@ -61,6 +61,30 @@ class PostCreateForm(forms.ModelForm):
         model = Post
         fields = ['title', 'slug', 'content']
 
+    title = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control mb-3',
+            'placeholder': 'Enter Post Title Here...'
+        })
+    )
+
+    slug = forms.SlugField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control mb-3',
+            'placeholder': 'Enter Post Slug Here...'
+        })
+    )
+
+    content = forms.CharField(
+        required=True,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control mb-3',
+            'placeholder': 'Enter Post Content Here...'
+        })
+    )
+
 
 class PostEditForm(forms.ModelForm):
     class Meta:
