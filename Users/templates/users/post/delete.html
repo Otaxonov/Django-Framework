@@ -1,11 +1,15 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<h3>Delete Post</h3>
-<form action="{% url 'users_post_delete' post.slug %}" method="post">
+
+<div class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">Delete Post</h4>
+  <hr>
+  <form action="{% url 'users_post_delete' post.slug %}" method="post">
     {% csrf_token %}
-    <p>Are you sure want to delete {{ post.title }} post</p>
-    <button type="submit">Yes</button>
-    <a href="{% url 'users_posts' %}">Cancel</a>
-</form>
+    <p>Are you sure want to delete {{ post.title }} post?</p>
+    <button class="btn btn-danger" type="submit">Yes, of course.</button>
+    <a class="btn btn-primary" href="{% url 'users_posts' %}">Cancel</a>
+  </form>
+</div>
 {% endblock content %}

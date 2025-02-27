@@ -26,6 +26,7 @@ class PostDeleteView(View):
     def post(self, request, *args, **kwargs):
         post = Post.objects.get(slug=kwargs['post_slug'], author=request.user)
         post.delete()
+        messages.success(request, 'Post Deleted Successfully!', extra_tags='success')
         return redirect('users_posts')
 
 
