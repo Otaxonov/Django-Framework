@@ -1,31 +1,80 @@
 {% extends 'blog/base.html' %}
+{% load custom_tags %}
 
 {% block content %}
-<a href="{% url 'users_post_create' %}">New Post</a>
+<a class="btn btn-success" href="{% url 'users_post_create' %}">New Post</a>
+<hr>
 {% if posts %}
-<style>
-table, th, td {
-  border:1px solid black;
-}
-</style>
-<table style="width:100%">
-  <tr>
-    <th>Title</th>
-    <th>Slug</th>
-    <th>Date Created</th>
-    <th>Date Modified</th>
-    <th>Action</th>
-  </tr>
-{% for post in posts %}
-  <tr>
-    <td>{{ post.title }}</td>
-    <td>{{ post.slug }}</td>
-    <td>{{ post.date_created }}</td>
-    <td>{{ post.date_modified }}</td>
-    <td><a href="{% url 'users_post_edit' post.slug  %}">Edit</a> / <a href="{% url 'users_post_delete' post.slug %}">Delete</a></td>
-  </tr>
-{% endfor %}
+<table class="table table-striped bg-light shadow-sm align-middle">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Slug</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th class="text-end" scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td>{{ post.title }}</td>
+        <td>{{ post.slug }}</td>
+        <td>{{ post.date_created }}</td>
+        <td>{{ post.date_modified }}</td>
+        <td class="text-end"><a class="btn btn-warning" href="{% url 'users_post_edit' post.slug  %}">Edit</a> <a class="btn btn-danger" href="{% url 'users_post_delete' post.slug %}">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
 </table>
+
+<!-- Pagination Controls -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+    {% if posts.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?{% param_replace page=1 %}" aria-label="First">
+                <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?{% param_replace page=posts.previous_page_number %}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&laquo;&laquo;</span>
+        </li>
+        <li class="page-item disabled">
+            <span class="page-link">&laquo;</span>
+        </li>
+    {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+        </li>
+    {% if posts.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?{% param_replace page=posts.next_page_number %}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?{% param_replace page=posts.paginator.num_pages %}" aria-label="Last">
+                <span aria-hidden="true">&raquo;&raquo;</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&raquo;</span>
+        </li>
+        <li class="page-item disabled">
+            <span class="page-link">&raquo;&raquo;</span>
+        </li>
+    {% endif %}
+    </ul>
+</nav>
+
 {% else %}
 <p>No Posts Yet</p>
 {% endif %}

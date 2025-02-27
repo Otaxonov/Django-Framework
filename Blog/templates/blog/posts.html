@@ -3,14 +3,19 @@
 {% block content %}
 
 {% if posts %}
-{% for post in posts %}
-<fieldset>
-    <legend><b>[ {{ post.title }} ][ <a href="{{ post.get_absolute_url }}">View</a> ]</b></legend>
-    <p>{{ post.content }}</p>
-</fieldset><br>
-{% endfor %}
+<div class="row">
+    {% for post in posts %}
+    <div class="col-md-3">
+        <div class="container p-3 bg-success text-white rounded-4 shadow mb-3">
+            <h5>{{ post.title }}</h5>
+            <hr>
+            <p>{{ post.content|truncatewords:10 }}</p>
+            <a class="btn btn-dark btn-sm" href="{{ post.get_absolute_url }}">View</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% else %}
-<p>No Posts Yet</p>
 {% endif %}
 
 {% endblock content %}

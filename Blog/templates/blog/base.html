@@ -14,6 +14,13 @@
 {% include 'blog/includes/navbar.html' %}
 
 <div class="container mt-5">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="form-control alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
     {% block content %}{% endblock content %}
 </div>
 
