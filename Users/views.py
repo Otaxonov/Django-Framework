@@ -1,16 +1,38 @@
+from Users.forms import PostCreateForm, PostEditForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 from django.utils.decorators import method_decorator
+from django.contrib.auth.forms import PasswordChangeForm
 from Users.forms import SignUpForm, SignInForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
-from Users.forms import PostCreateForm, PostEditForm, UserEditForm, ProfileEditForm
+from django.contrib.auth import login, logout, update_session_auth_hash
+from django.core.paginator import Paginator
 from Users.filters import PostFilter
 from django.contrib import messages
 from Blog.models import Post
 from django.views import View
 
 # Create your views here.
+
+
+@method_decorator(login_required, name='dispatch')
+class UserPasswordChangeView(View):
+    template_name = 'users/change_password.html'
+    context = {'title': 'Change Password'}
+
+    def get(self, request, *args, **kwargs):
+        form = PasswordChangeForm(request.user)
+        self.context['form'] = form
+        return render(request=request, template_name=self.template_name, context=self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password has been updated successfully!')
+            return redirect('account_settings')
+        self.context['form'] = form
+        return render(request=request, template_name=self.template_name, context=self.context)
 
 
 @method_decorator(login_required, name='dispatch')
