@@ -4,13 +4,38 @@ from django.utils.decorators import method_decorator
 from Users.forms import SignUpForm, SignInForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from Users.forms import PostCreateForm, PostEditForm
+from Users.forms import PostCreateForm, PostEditForm, UserEditForm, ProfileEditForm
 from Users.filters import PostFilter
 from django.contrib import messages
 from Blog.models import Post
 from django.views import View
 
 # Create your views here.
+
+
+@method_decorator(login_required, name='dispatch')
+class AccountSettingsView(View):
+    template_name = 'users/account_settings.html'
+    context = {'title': 'Account Settings'}
+
+    def get(self, request, *args, **kwargs):
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+        self.context['user_form'] = user_form
+        self.context['profile_form'] = profile_form
+        return render(request=request, template_name=self.template_name, context=self.context)
+
+    def post(self, request, *args, **kwargs):
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your account has been updated successfully!')
+            return redirect('account_settings')
+        self.context['user_form'] = user_form
+        self.context['profile_form'] = profile_form
+        return render(request=request, template_name=self.template_name, context=self.context)
 
 
 @method_decorator(login_required, name='dispatch')
